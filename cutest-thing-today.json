@@ -4,9 +4,9 @@
     "title": "The Cutest Thing You’ll See Today",
     "style": {
       "visual": "REALISTIC",
-      "palette": "warm natural daylight + cozy indoor tones",
-      "lighting": "soft daylight in park, warm lamp-light indoors",
-      "look_notes": "natural live-action look, handheld-like camera for intimacy",
+      "palette": "warm natural daylight (park); cozy tungsten indoor (living room)",
+      "lighting": "soft daylight outside; warm key + soft fill inside",
+      "look_notes": "live-action look, gentle handheld feel, skin tones natural, pets fur detail preserved",
       "seed": ""
     },
     "tech": { "aspect_ratio": "9:16", "fps": 24 }
@@ -15,21 +15,21 @@
     {
       "id": "char_001",
       "name": "Emma",
-      "traits": ["5-year-old girl","playful","curly hair"],
+      "traits": ["child (5-year-old girl)", "playful", "curly hair", "REALISTIC look"],
       "identity_lock": true,
       "reference_images": []
     },
     {
       "id": "char_002",
       "name": "Buddy",
-      "traits": ["golden retriever puppy","energetic"],
+      "traits": ["puppy (golden retriever)", "energetic", "REALISTIC look"],
       "identity_lock": true,
       "reference_images": []
     },
     {
       "id": "char_003",
       "name": "Mia",
-      "traits": ["fluffy white kitten","curious"],
+      "traits": ["kitten (fluffy white)", "curious", "REALISTIC look"],
       "identity_lock": true,
       "reference_images": []
     }
@@ -38,88 +38,100 @@
     {
       "id":"loc_001",
       "name":"Sunny Park / Playground",
-      "backdrop":"green grass, play structures, bright sky",
+      "backdrop":"green grass, bright sky, simple play structures",
       "mood":"joyful outdoors"
     },
     {
       "id":"loc_002",
       "name":"Cozy Living Room",
-      "backdrop":"couch, pillows, warm light",
+      "backdrop":"soft fabric couch, pillows, warm lamp light",
       "mood":"home comfort"
     }
   ],
   "scenes": [
     {
+      "id":"S00",
+      "title":"Character Setup",
+      "goal":"generate reference images for all characters",
+      "duration_s": 7,
+      "location_id":"loc_001",
+      "characters":["char_001","char_002","char_003"],
+      "continuity_ref":"none",
+      "status":"todo",
+      "prompt":"WIDE SHOT of Emma (child, curly hair, playful), Buddy (golden retriever puppy, energetic), and Mia (fluffy white kitten, curious) standing together; CAMERA static,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND simple park lawn with soft bokeh,\nCONTINUITY use reference image: none (high weight); keep identity (hair/fur/palette); continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export individual stills for Emma, Buddy, Mia (e.g., ref_emma.png, ref_buddy.png, ref_mia.png) and attach to characters.reference_images before S01."
+    },
+    {
       "id":"S01",
       "title":"Hook",
       "goal":"grab attention",
-      "duration_s":7,
+      "duration_s": 7,
       "location_id":"loc_001",
       "characters":["char_001","char_002"],
-      "continuity_ref":"none",
+      "continuity_ref":"S00_refs",
       "status":"todo",
-      "prompt":"WIDE SHOT of Emma running with Buddy into the sunny park, CAMERA tracking forward with them, LIGHTING natural daylight, soft shadows, STYLE match REALISTIC live-action look, 4K, BACKGROUND playground structures and green grass, CONTINUITY use reference image: none; keep identity (curly hair, puppy coat); continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"export last frame for S02; optional: test 2–3 prompt variants in ChatGPT"
+      "prompt":"WIDE SHOT of Emma running into the sunny park with Buddy bounding beside her; CAMERA tracking forward,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND playground structures and green grass,\nCONTINUITY use reference image: S00_refs (high weight); keep identity (curly hair, golden puppy coat/palette); continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export last frame for S02; if faces look dim, append Patch: FaceLight."
     },
     {
       "id":"S02",
       "title":"Playtime",
       "goal":"show joy and energy",
-      "duration_s":7,
+      "duration_s": 7,
       "location_id":"loc_001",
       "characters":["char_001","char_002"],
       "continuity_ref":"S01_lastframe.png",
       "status":"todo",
-      "prompt":"MEDIUM SHOT of Buddy chasing a ball while Emma laughs behind, CAMERA panning right to follow Buddy, LIGHTING bright sunlight, STYLE match REALISTIC look, 4K, BACKGROUND park lawn, CONTINUITY use reference image: S01_lastframe.png; keep identity; continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"export last frame for S03"
+      "prompt":"MEDIUM SHOT of Buddy chasing a bright ball while Emma laughs in background; CAMERA pan right to follow Buddy,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND park lawn with soft bokeh,\nCONTINUITY use reference image: S01_lastframe.png (high weight); keep identity (Emma hair, Buddy coat); continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export last frame for S03; if color shifts, append Patch: ColorLock."
     },
     {
       "id":"S03",
       "title":"Togetherness",
       "goal":"heartwarming bond",
-      "duration_s":6,
+      "duration_s": 6,
       "location_id":"loc_001",
       "characters":["char_001","char_002"],
       "continuity_ref":"S02_lastframe.png",
       "status":"todo",
-      "prompt":"CLOSE UP of Emma hugging Buddy, both smiling and happy, CAMERA slight dolly-in, LIGHTING golden sunlight on faces, STYLE REALISTIC warm tones, BACKGROUND blurred park greenery, CONTINUITY use reference image: S02_lastframe.png; keep identity; continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"export last frame for S04"
+      "prompt":"CLOSE UP of Emma hugging Buddy, both smiling; CAMERA slight dolly-in,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND blurred green trees,\nCONTINUITY use reference image: S02_lastframe.png (high weight); keep identity; continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export last frame for S04."
     },
     {
       "id":"S04",
       "title":"Transition Home",
       "goal":"shift location smoothly",
-      "duration_s":7,
+      "duration_s": 7,
       "location_id":"loc_002",
       "characters":["char_001","char_002"],
       "continuity_ref":"S03_lastframe.png",
       "status":"todo",
-      "prompt":"MEDIUM SHOT of Emma and Buddy entering a cozy living room, CAMERA steady follow, LIGHTING warm indoor lamp-light, STYLE REALISTIC home vibe, BACKGROUND couch and pillows, CONTINUITY use reference image: S03_lastframe.png; keep identity; continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"export last frame for S05"
+      "prompt":"MEDIUM SHOT of Emma and Buddy entering a cozy living room and settling near the couch; CAMERA gentle follow,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND warm lamp-lit couch and pillows,\nCONTINUITY use reference image: S03_lastframe.png (high weight); keep identity; continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export last frame for S05."
     },
     {
       "id":"S05",
       "title":"Cozy Moment",
       "goal":"introduce Mia and warmth",
-      "duration_s":7,
+      "duration_s": 7,
       "location_id":"loc_002",
       "characters":["char_001","char_002","char_003"],
       "continuity_ref":"S04_lastframe.png",
       "status":"todo",
-      "prompt":"MEDIUM CLOSE SHOT of Buddy and Mia cuddled on the couch while Emma laughs beside, CAMERA gentle tilt, LIGHTING soft warm indoor glow, STYLE REALISTIC cozy tones, BACKGROUND home details (pillows, blanket), CONTINUITY use reference image: S04_lastframe.png; keep identity; continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"export last frame for S06"
+      "prompt":"MEDIUM CLOSE SHOT of Buddy and Mia cuddled on the couch while Emma giggles beside them; CAMERA gentle tilt,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND cozy blankets and pillows,\nCONTINUITY use reference image: S04_lastframe.png (high weight); keep identity (kitten white fur palette); continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Export last frame for S06."
     },
     {
       "id":"S06",
       "title":"Ending Smile",
       "goal":"deliver the cute 'aww' payoff",
-      "duration_s":6,
+      "duration_s": 6,
       "location_id":"loc_002",
       "characters":["char_001","char_002","char_003"],
       "continuity_ref":"S05_lastframe.png",
       "status":"todo",
-      "prompt":"CLOSE UP of Emma, Buddy, and Mia together on couch, all smiling/adorable, CAMERA slow dolly-in, LIGHTING warm cozy glow, STYLE REALISTIC, BACKGROUND blurred living room, CONTINUITY use reference image: S05_lastframe.png; keep identity; continue motion ~1s, DURATION 6–8 seconds, AUDIO none.",
-      "notes":"final scene; hold last frame for outro"
+      "prompt":"CLOSE UP of Emma, Buddy, and Mia snuggled together on the couch; CAMERA slow dolly-in,\nLIGHTING face evenly lit; soft key front; fill 30%; rim 60%; exposure +0.3 EV,\nSTYLE match REALISTIC live-action look; crisp edges; 4K,\nBACKGROUND blurred living room highlights,\nCONTINUITY use reference image: S05_lastframe.png (high weight); keep identity; continue motion ~1s,\nDURATION 6–8 seconds, AUDIO none.",
+      "notes":"Hold last frame for outro."
     }
   ],
   "checklist": {
